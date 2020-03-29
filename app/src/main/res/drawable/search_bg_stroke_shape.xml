@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <solid android:color="#F4F4F4" /> <!-- 填充的颜色：这里设置背景透明 -->
+    <corners android:radius="30dp" /><!-- android:radius 弧形的半径 -->
+
+</shape>

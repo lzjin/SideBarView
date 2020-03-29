@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <!--自定义字母索引属性-->
+    <declare-styleable name="SideBarView">
+        <attr name="sidebarSelectTextColor" format="color|reference" />
+        <attr name="sidebarUnSelectTextColor" format="color|reference" />
+        <attr name="sidebarSelectTextSize" format="dimension" />
+        <attr name="sidebarUnSelectTextSize" format="dimension" />
+
+        <attr name="sidebarWordBackground" format="reference" />
+        <attr name="sidebarWordTextColor" format="color|reference" />
+        <attr name="sidebarWordTextSize" format="dimension" />
+
+        <attr name="is_auto_play" format="boolean" />
+        <attr name="scroll_time" format="integer" />
+
+    </declare-styleable>
+
+
+</resources>

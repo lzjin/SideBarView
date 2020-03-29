@@ -4,21 +4,83 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+    <!--1-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@mipmap/ic_search_bg"
+        android:paddingTop="25dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <com.lzj.sidebar.SideBarLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="12dp"
+                android:paddingTop="10dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="10dp" />
 
-    </com.lzj.sidebar.SideBarLayout>
+            <EditText
+                android:id="@+id/edt_search"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/search_bg_stroke_shape"
+                android:drawableLeft="@mipmap/ic_search"
+                android:drawablePadding="12dp"
+                android:hint="输入姓名"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:maxLength="18"
+                android:maxLines="1"
+                android:paddingLeft="20dp"
+                android:singleLine="true"
+                android:textSize="14sp" />
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <!--2-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:divider="@null"
+            android:overScrollMode="never"
+            android:scrollbars="none" />
+
+        <com.lzj.sidebar.SideBarLayout
+            android:id="@+id/sidebar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:sidebarSelectTextColor="@color/hotpink"
+            app:sidebarUnSelectTextColor="@color/colorPrimary"
+            app:sidebarSelectTextSize="12sp"
+            app:sidebarUnSelectTextSize="10sp"
+            app:sidebarWordBackground="@drawable/sort_text_bg"
+            app:sidebarWordTextColor="@color/darkred"
+            app:sidebarWordTextSize="45sp">
+
+        </com.lzj.sidebar.SideBarLayout>
+
+
+    </FrameLayout>
+
 
 </LinearLayout>
