@@ -1,8 +1,10 @@
 # SideBarView
 Android 字母索引View,类似电话联系人分类 
  
-#### 博客地址  
+#### 博客讲解地址,欢迎前往查看
 [博客讲解地址](https://blog.csdn.net/lin857/article/details/105193760)
+
+### 欢迎大家Star,老铁给鼓励呗
 
 ### 效果图如下:  
 <img    src="https://raw.githubusercontent.com/lzjin/SideBarView/master/imgfile/gif.gif">
@@ -13,8 +15,8 @@ Android 字母索引View,类似电话联系人分类
 * 支持屏幕中间高亮TextView的字体大小、颜色、背景设置  
 
 ### API方法介绍  
-* onSideBarScrollUpdateItem("A")  侧边栏字母滑动 --> item  
-* OnItemScrollUpdateText("B")  item滑动 --> 侧边栏字母
+* onSideBarScrollUpdateItem("A")  <== 侧边栏字母滑动 --> item  
+* OnItemScrollUpdateText("B")   <== item滑动 --> 侧边栏字母  
 
 ### Jitpack 
  
@@ -70,3 +72,6 @@ dependencies {
 ```
 sideBarLayout.OnItemScrollUpdateText(mList.get(firstItemPosition).getWord());
 ```
+### 老铁都看这了,给个Star再走呗  
+
+#### v1.0 基本版使用  
