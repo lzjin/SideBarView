@@ -7,7 +7,7 @@ Android 字母索引View,类似电话联系人分类
 ### 欢迎大家Star,老铁给鼓励呗
 
 ### 效果图如下:  
-<img    src="https://raw.githubusercontent.com/lzjin/SideBarView/master/imgfile/gif.gif">
+<img    src="https://raw.githubusercontent.com/lzjin/SideBarView/master/imgfolder/gif.gif">
 
 ### 主要功能  
 * 支持侧边栏字母大小设置  
@@ -35,7 +35,7 @@ Step 2. Add the dependency
 ```
 dependencies {
     //androidX 版本使用下面的依赖
-    implementation 'com.github.lzjin:sidebar:1.0'
+    implementation 'com.github.lzjin:SideBarView:1.0'
 }
 ```
 
