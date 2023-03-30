@@ -35,7 +35,7 @@ Step 2. Add the dependency
 ```
 dependencies {
     //androidX 版本使用下面的依赖
-    implementation 'com.github.lzjin:SideBarView:1.1'
+    implementation 'com.github.lzjin:SideBarView:1.1.0'
 }
 ```
 
@@ -76,6 +76,6 @@ sideBarLayout.OnItemScrollUpdateText(mList.get(firstItemPosition).getWord());
 
 #### 1.0 基本版使用  
 
-#### 1.1 修复bug
+#### 1.1.0 修复bug
 * 重复调用问题  
 * 优化示例的搜索
