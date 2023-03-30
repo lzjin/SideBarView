@@ -2,16 +2,15 @@ package com.lzj.sidebarviewdemo;
 
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.gyf.immersionbar.ImmersionBar;
 import com.lzj.sidebar.SideBarLayout;
-import com.lzj.sidebar.SideBarSortView;
-import com.lzj.sidebarviewdemo.adapter.SortAdaper;
+import com.lzj.sidebarviewdemo.adapter.SortAdapter;
 import com.lzj.sidebarviewdemo.bean.SortBean;
 import com.lzj.sidebarviewdemo.utils.SortComparator;
 
@@ -29,8 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 使用简单示例
- * 推荐使用listview结合联动
+ * 参考示例
  */
 public class MainActivity extends AppCompatActivity  implements   TextWatcher {
     @BindView(R.id.iv_back)
@@ -41,7 +39,7 @@ public class MainActivity extends AppCompatActivity  implements   TextWatcher {
     RecyclerView recyclerView;
     @BindView(R.id.sidebar)
     SideBarLayout sidebarView;
-    SortAdaper mSortAdaper;
+    SortAdapter mSortAdaper;
     List<SortBean> mList;
     private int mScrollState = -1;
     @Override
@@ -50,6 +48,7 @@ public class MainActivity extends AppCompatActivity  implements   TextWatcher {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         ImmersionBar.with(this).transparentStatusBar().fitsSystemWindows(false).statusBarDarkFont(false).init();
+
         edtSearch.addTextChangedListener(this);
         mScrollState = -1;
         initData();
@@ -57,27 +56,10 @@ public class MainActivity extends AppCompatActivity  implements   TextWatcher {
     }
     private void initData() {
         mList = new ArrayList<>();
-        mList.add(new SortBean("阿三"," 成都敬江渠"));
-        mList.add(new SortBean("宝宝"," 成都敬江渠"));
-        mList.add(new SortBean("张三"," 成都敬江渠"));
-        mList.add(new SortBean("张龙"," 成都敬江渠"));
-        mList.add(new SortBean("张笑龙"," 成都敬江渠"));
-        mList.add(new SortBean("李世民"," 成都敬江渠"));
-        mList.add(new SortBean("冯雨晴"," 成都敬江渠"));
-        mList.add(new SortBean("陈菲菲"," 成都敬江渠"));
-        mList.add(new SortBean("康有为"," 成都敬江渠"));
-        mList.add(new SortBean("康师傅"," 成都敬江渠"));
-        mList.add(new SortBean("刊史龙"," 成都敬江渠"));
-        mList.add(new SortBean("胜龙"," 成都敬江渠"));
-        mList.add(new SortBean("神经病"," 成都敬江渠"));
-        mList.add(new SortBean("飞儿"," 成都敬江渠"));
-        mList.add(new SortBean("林落"," 成都敬江渠"));
-        mList.add(new SortBean("陈迂曲"," 成都敬江渠"));
-        mList.add(new SortBean("李白"," 成都敬江渠"));
-        mList.add(new SortBean("李太白"," 成都敬江渠"));
+        createTestData();
         //进行排序
         Collections.sort(mList, new SortComparator());
-        mSortAdaper = new SortAdaper(R.layout.itemview_sort, mList);
+        mSortAdaper = new SortAdapter(R.layout.itemview_sort, mList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this)); //设置LayoutManager为LinearLayoutManager
         recyclerView.setAdapter(mSortAdaper);
         recyclerView.setNestedScrollingEnabled(false);//解决滑动不流畅
@@ -120,7 +102,7 @@ public class MainActivity extends AppCompatActivity  implements   TextWatcher {
                         firstItemPosition = linearManager.findFirstVisibleItemPosition();
                     }
 
-                    sidebarView.OnItemScrollUpdateText(mList.get(firstItemPosition).getWord());
+                    sidebarView.onItemScrollUpdateSideBarText(mList.get(firstItemPosition).getWord());
                     if (mScrollState == RecyclerView.SCROLL_STATE_IDLE) {
                         mScrollState = -1;
                     }
@@ -146,19 +128,19 @@ public class MainActivity extends AppCompatActivity  implements   TextWatcher {
         if (mList == null || mList.size() <= 0) {
             return;
         }
-        String keyWord = s.toString();
+        String keyWord = s.toString().trim();
         Log.i("test","------------key="+keyWord);
-        if (!keyWord.equals("")) {
-            if (matcherSearch(keyWord, mList).size() > 0) {
-                sidebarView.OnItemScrollUpdateText(matcherSearch(keyWord, mList).get(0).getWord());
+        if (!TextUtils.isEmpty(keyWord)) {
+            List<SortBean> searchList=matcherSearch(keyWord, mList);
+            if (searchList.size() > 0) {
+                sidebarView.onItemScrollUpdateSideBarText(searchList.get(0).getWord());
             }
-            mSortAdaper.setNewData(matcherSearch(keyWord, mList));
-            mSortAdaper.notifyDataSetChanged();
+            mSortAdaper.setNewData(searchList);
         } else {
-            sidebarView.OnItemScrollUpdateText(mList.get(0).getWord());
+            sidebarView.onItemScrollUpdateSideBarText(mList.get(0).getWord());
             mSortAdaper.setNewData(mList);
-            mSortAdaper.notifyDataSetChanged();
         }
+        mSortAdaper.notifyDataSetChanged();
     }
 
     /**
@@ -187,5 +169,93 @@ public class MainActivity extends AppCompatActivity  implements   TextWatcher {
         }
 
         return results;
+    }
+
+
+    /**
+     * 创建测试数据
+     */
+    private void createTestData(){
+        //A
+        mList.add(new SortBean("阿三"," 成都敬江渠"));
+        mList.add(new SortBean("阿刘"," 成都敬江渠"));
+        mList.add(new SortBean("阿九"," 成都敬江渠"));
+        //B
+        mList.add(new SortBean("宝宝"," 成都敬江渠"));
+        mList.add(new SortBean("包打听"," 成都敬江渠"));
+        mList.add(new SortBean("豹子费"," 成都敬江渠"));
+        //C
+        mList.add(new SortBean("陈菲菲"," 成都敬江渠"));
+        mList.add(new SortBean("陈大菲"," 成都敬江渠"));
+        mList.add(new SortBean("车臣"," 成都敬江渠"));
+        mList.add(new SortBean("程师妹"," 成都敬江渠"));
+        //D
+        mList.add(new SortBean("戴氏龙"," 成都敬江渠"));
+        mList.add(new SortBean("德飞侠"," 成都敬江渠"));
+        mList.add(new SortBean("刁峰"," 成都敬江渠"));
+        //E
+        mList.add(new SortBean("饿了么"," 成都敬江渠"));
+        mList.add(new SortBean("恶人谷"," 成都敬江渠"));
+        mList.add(new SortBean("额度"," 成都敬江渠"));
+        //F
+        mList.add(new SortBean("冯雨晴"," 成都敬江渠"));
+        mList.add(new SortBean("飞儿"," 成都敬江渠"));
+        // G
+        mList.add(new SortBean("郭沫"," 成都敬江渠"));
+        mList.add(new SortBean("果实李"," 成都敬江渠"));
+        // H
+        mList.add(new SortBean("海神"," 成都敬江渠"));
+        mList.add(new SortBean("韩信"," 成都敬江渠"));
+        mList.add(new SortBean("汉朝"," 成都敬江渠"));
+        // I
+        mList.add(new SortBean("I Love You"," 成都敬江渠"));
+        // J
+        mList.add(new SortBean("精忠报国"," 成都敬江渠"));
+        mList.add(new SortBean("积极"," 成都敬江渠"));
+        // K
+        mList.add(new SortBean("康有为"," 成都敬江渠"));
+        mList.add(new SortBean("康师傅"," 成都敬江渠"));
+        // L
+        mList.add(new SortBean("李白"," 成都敬江渠"));
+        mList.add(new SortBean("李太白"," 成都敬江渠"));
+        mList.add(new SortBean("李世民"," 成都敬江渠"));
+        mList.add(new SortBean("林落"," 成都敬江渠"));
+        // M
+        mList.add(new SortBean("米老鼠"," 成都敬江渠"));
+        mList.add(new SortBean("明日"," 成都敬江渠"));
+        // N
+        mList.add(new SortBean("你好啊"," 成都敬江渠"));
+        // O
+        mList.add(new SortBean("哦"," 成都敬江渠"));
+        // P
+        mList.add(new SortBean("骗你的"," 成都敬江渠"));
+        // Q
+        mList.add(new SortBean("情不自禁"," 成都敬江渠"));
+        // R
+        mList.add(new SortBean("日子不错"," 成都敬江渠"));
+        // S
+        mList.add(new SortBean("胜龙"," 成都敬江渠"));
+        mList.add(new SortBean("神经病"," 成都敬江渠"));
+        // T
+        mList.add(new SortBean("提示"," 成都敬江渠"));
+        mList.add(new SortBean("腾讯"," 成都敬江渠"));
+        // U
+        mList.add(new SortBean("U YB"," 成都敬江渠"));
+        // V
+        mList.add(new SortBean("V字头"," 成都敬江渠"));
+        // W
+        mList.add(new SortBean("王老三"," 成都敬江渠"));
+        mList.add(new SortBean("王东的"," 成都敬江渠"));
+        // X
+        mList.add(new SortBean("新人"," 成都敬江渠"));
+        mList.add(new SortBean("洗漱"," 成都敬江渠"));
+        // Y
+        mList.add(new SortBean("阳光"," 成都敬江渠"));
+        mList.add(new SortBean("杨家枪"," 成都敬江渠"));
+        // Z
+        mList.add(new SortBean("张三"," 成都敬江渠"));
+        mList.add(new SortBean("张龙"," 成都敬江渠"));
+        mList.add(new SortBean("张笑龙"," 成都敬江渠"));
+        // #
     }
 }

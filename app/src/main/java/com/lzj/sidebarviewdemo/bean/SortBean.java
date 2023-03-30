@@ -7,7 +7,7 @@ public class SortBean {
     private String name;
     private String pinyin;
     private String jianpin;
-    private String word;
+    private String word;//首字母
     private String telephone;
     private String address;
 

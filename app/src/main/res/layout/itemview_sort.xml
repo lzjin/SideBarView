@@ -47,8 +47,9 @@
 
         <ImageView
             android:layout_width="120dp"
-            android:layout_height="80dp"
-            android:background="@color/colorAccent"/>
+            android:layout_height="82dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/test" />
 
 
         <TextView
